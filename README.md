@@ -1,0 +1,2 @@
+# -wiczeniaSQL
+Podstawy baz danych 
