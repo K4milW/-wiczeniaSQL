@@ -151,3 +151,92 @@ VALUES ('Niedostepna','books',1),
 
 
 SELECT * FROM dbo.status 
+
+
+
+
+
+INSERT INTO country (country, country_short)
+VALUES ('Polska', 'PL');
+
+
+
+
+INSERT INTO books (title, isbn, publication_year, publisher, genre, available_copies, total_copies, status_id)
+VALUES 
+('Lalka', '9788373272687', 1890, 'Czytelnik', 'Powieść', 3, 5, 1),
+('Pan Tadeusz', '9788373271185', 1834, 'Ossolineum', 'Epopeja', 2, 4, 1),
+('Krzyżacy', '9788373272236', 1900, 'Nasza Księgarnia', 'Powieść historyczna', 1, 3, 2),
+('Zbrodnia i kara', '9780140449136', 1866, 'Penguin Books', 'Powieść', 2, 2, 1),
+('W pustyni i w puszczy', '9788373271116', 1911, 'Greg', 'Przygodowa', 0, 2, 2),
+('Mały Książę', '9788373271284', 1943, 'Media Rodzina', 'Baśń filozoficzna', 4, 4, 1),
+('Hobbit', '9788373197966', 1937, 'Amber', 'Fantasy', 3, 5, 1),
+('Harry Potter i Kamień Filozoficzny', '9788372780138', 1997, 'Media Rodzina', 'Fantasy', 5, 5, 1),
+('1984', '9780451524935', 1949, 'Houghton Mifflin Harcourt', 'Dystopia', 1, 3, 2),
+('Rok 1984', '9788372781920', 1949, 'Rebis', 'Science fiction', 2, 2, 1);
+
+
+
+INSERT INTO authors (first_name, last_name, birth_date, country_id, biography)
+VALUES 
+('Bolesław', 'Prus', '1847-08-20', 1, 'Polski prozaik pozytywizmu.'),
+('Adam', 'Mickiewicz', '1798-12-24', 1, 'Wieszcz narodowy, poeta romantyczny.'),
+('Henryk', 'Sienkiewicz', '1846-05-05', 1, 'Pisarz, laureat Nagrody Nobla.'),
+('Fiodor', 'Dostojewski', '1821-11-11', 1, 'Rosyjski pisarz psychologiczny.'),
+('Antoine', 'de Saint-Exupéry', '1900-06-29', 1, 'Francuski pisarz i pilot.'),
+('J.R.R.', 'Tolkien', '1892-01-03', 1, 'Angielski filolog i autor fantasy.'),
+('J.K.', 'Rowling', '1965-07-31', 1, 'Brytyjska autorka Harry’ego Pottera.'),
+('George', 'Orwell', '1903-06-25', 1, 'Brytyjski pisarz i eseista.'),
+('Stanisław', 'Lem', '1921-09-12', 1, 'Polski autor sci-fi.'),
+('Eliza', 'Orzeszkowa', '1841-06-06', 1, 'Polska pisarka epoki pozytywizmu.');
+
+
+INSERT INTO authorsBooks (author_id, book_id)
+VALUES
+(1, 1), 
+(2, 2),
+(3, 3),
+(4, 4),
+(3, 5),
+(5, 6),
+(6, 7),
+(7, 8),
+(8, 9),
+(8, 10),
+(9, 10);
+
+
+
+
+INSERT INTO [user] (username, password_hash, email, role, status_id)
+VALUES
+('jan_kowalski', 'hashed_pw_1', 'jan.kowalski@example.com', 'user', 3),
+('anna_nowak', 'hashed_pw_2', 'anna.nowak@example.com', 'user', 3),
+('admin1', 'hashed_pw_3', 'admin@example.com', 'admin', 3),
+('bibliotekarka', 'hashed_pw_4', 'biblioteka@example.com', 'librarian', 3);
+
+
+INSERT INTO readers (user_id, first_name, last_name, address, phone, status_id)
+VALUES
+(1, 'Jan', 'Kowalski', 'ul. Warszawska 1', '123456789', 3),
+(2, 'Anna', 'Nowak', 'ul. Krakowska 5', '987654321', 3),
+(3, 'Piotr', 'Zieliński', 'ul. Główna 3', '555444333', 3),
+(4, 'Ewa', 'Wiśniewska', 'ul. Leśna 10', '444555666', 3);
+
+
+
+INSERT INTO borrowing (book_id, readers_id, due, status, status_id)
+VALUES
+(1, 1, 14, 'wypożyczona', 1),
+(2, 2, 14, 'zwrócona', 1),
+(3, 3, 14, 'przetrzymana', 2),
+(4, 4, 14, 'wypożyczona', 1);
+
+
+
+INSERT INTO reservation (book_id, readers_id, status_id)
+VALUES
+(5, 1, 1),
+(6, 2, 1),
+(7, 3, 1),
+(8, 4, 2);
