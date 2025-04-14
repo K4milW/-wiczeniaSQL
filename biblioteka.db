@@ -132,7 +132,7 @@ CREATE TABLE fine (
     date_issue DATETIME DEFAULT CURRENT_TIMESTAMP,
     date_pay DATETIME,
 	--[status] varchar(20) CHECK ([status] in ('naliczona', 'opłacona', 'umorzona')) DEFAULT 'naliczona',
-	[status_id] INT NOT NULL,
+	[status_id] INT NOT NULL
     FOREIGN KEY (borrowing_id) REFERENCES borrowing(borrowing_id),
 	FOREIGN KEY ([status_id]) REFERENCES [status]([status_id])
 );
@@ -140,7 +140,7 @@ CREATE TABLE fine (
 
 
 
-----INSERT INTO nazwa (kolumna) VALUES (wartosc)
+--INSERT INTO nazwa (kolumna) VALUES (wartosc)
 INSERT INTO dbo.[status] ([status_name],[status_desc],[status_type],[status])
 VALUES ('Dostępna','Książka jest dostępna w bibliotece','books',1)
 
@@ -150,120 +150,4 @@ VALUES ('Niedostepna','books',1),
 ('Nieaktywny','users',1)
 
 
-SELECT * FROM dbo.status
-
-INSERT INTO dbo.[status] ([status_name],[status_type],[status])
-VALUES ('Dostepna', 'books', 1),
-	   ('Wypozyczona', 'books', 1),
-       ('Zaginiona', 'books', 1),
-       ('W trakcie naprawy', 'books', 1),
-       ('Oczekujacy na aktywacje', 'users', 1),
-       ('Konto wygaslo', 'users', 1),
-       ('Zablokowany', 'users', 1),
-       ('W trakcie weryfikacji', 'users', 1),
-       ('Zawieszony', 'users', 1),
-	   ('Zwrocona', 'borrowing', 1),
-	   ('Przetrzymywana', 'borrowing', 1),
-	   ('Zrealizowana', 'reservation', 1),
-	   ('Anulowana', 'reservation', 1),
-	   ('Oplacone', 'fine', 1),
-	   ('Nieoplacone', 'fine', 1);
-
-INSERT INTO dbo.country(country, country_short)
-VALUES ('Stany Zjednoczone', 'US'),
-	   ('Rosja', 'RU'),
-	   ('Japonia', 'JP'),
-	   ('Polska', 'PL'),
-	   ('Niemcy', 'DE'),
-	   ('Wielka Brytania', 'UK'),
-	   ('Francja', 'FR'),
-	   ('Palau', 'PW'),
-	   ('Togo', 'TG'),
-	   ('Włochy', 'IT');
-
-INSERT INTO dbo.books(title, isbn, publication_year, publisher, genre, available_copies, total_copies, status_id)
-VALUES ('Pieśń o Achillesie', '9788367338615', 2022, 'Albatros','powieść historyczna', 2, 10, 4),
-	   ('Metro 2033', '9788367323475', 2022, 'Insignis', 'powieść przygodowa', 5, 12, 4),
-	   ('Zatracenie', '9788307036533', 2025, 'Czytelnik', 'powieść psychologiczna', 3, 3, 1),
-	   ('Cyberpunk 2077. Bez przypadku', '9788366178984', 2023, 'Powergraph', 'science fiction', 4, 7, 4),
-	   ('Na Zachodzie bez zmian', '9788383383392', 2025, 'Rebis', 'powieść wojenna', 8, 9, 4),
-	   ('Duma i uprzedzenie', '9788382891362', 2024, 'Świat Książki', 'powieść obyczajowa', 1, 2, 4),
-	   ('Zgroza w Dunwich i inne przerażające opowieści', '9788377310984', 2012, 'Vesper', 'horror', 1, 1, 4),
-	   ('Miecz Kaigenu', '9788377314968', 2024, 'Vesper', 'fantasy', 3, 4, 4),
-	   ('Mężczyzna, który rozmawiał z hienami', '9788383825007', 2025, 'Czarna Owca', 'kryminał', 0, 6, 1),
-	   ('Idealne morderstwo', '9788382801101', 2022, 'Filia', 'kryminał', 2, 3, 4);
-
-INSERT INTO dbo.authors(first_name, last_name, birth_date, country_id, biography)
-VALUES ('Madeline', 'Miller', '1978-07-24', 1, 'Amerykańska pisarka, autorka książek fantasy osadzonych w świecie mitologii greckiej. Miller urodziła się w Bostonie, a dorastała w Nowym Jorku i Filadelfii. Po ukończeniu Uniwersytetu Browna z tytułem licencjata (2000) i magistra (2001) studiów klasycznych została nauczycielką łaciny i greki oraz wykładała dzieła Szekspira w szkole średniej. Przez rok studiowała również w Committee on Social Thought w University of Chicago, pracując nad doktoratem, a od 2009 do 2010 roku studiowała w Yale School of Drama, gdzie uzyskała tytuł magistra dramaturgii i krytyki teatralnej.'),
-       ('Dmitry', 'Glukhovsky', '1979-06-12', 2, 'Rosyjski pisarz, dziennikarz, korespondent wojenny, felietonista, radiowiec, prezenter telewizyjny. Dmitrij Głuchowski urodził się i wychował w Moskwie. Jego rodzina jest zaliczana do rosyjskiej inteligencji. Rozpoczął edukację w moskiewskiej szkole im. W. D. Polienowa z rozszerzoną nauką języka francuskiego. Już wtedy postanowił, że zostanie pisarzem. W wieku 15 lat wpadł na pomysł fabuły Metra 2033. W wieku 17 lat opuścił Rosję i przez cztery i pół roku mieszkał i uczył się w Izraelu, gdzie studiował na Uniwersytecie Hebrajskim w Jerozolimie.'),
-	   ('Osamu', 'Dazai', '1909-06-19', 3, 'Prozaik japoński. Był autorem pesymistycznych utworów, w których poruszał problemy zubożałej arystokracji i inteligencji japońskiej. Do najbardziej znanych jego dzieł należy powieść Shayō (Zmierzch, 1947) oraz opowiadania: Omoide (Wspomnienia, 1933), Dōke-no hana (Perły błazenady, 1935) i Ningen shikkaku (Zatracenie, 1948).'),
-	   ('Rafał', 'Kosik', '1971-10-08', 4, 'Polski pisarz science fiction, założyciel wydawnictwa Powergraph. Studiował architekturę na Politechnice Warszawskiej, ale przerwał studia, by wraz z żoną Katarzyną założyć agencję reklamową Powergraph (później przekształconą w wydawnictwo), w której jest dyrektorem kreatywnym i grafikiem. Rysuje również rysunki satyryczne. Autor cyklu powieści Felix, Net i Nika.'),
-	   ('Erich Maria', 'Remarque', '1898-06-22', 5, 'Niemiecki pisarz, dramaturg, dziennikarz, weteran I wojny światowej. Do jego najwybitniejszych dzieł należą powieści Na Zachodzie bez zmian (1929) i Łuk triumfalny (1945). Edukację zaczął jako sześciolatek w przykościelnej szkole, po pięciu latach nauki przeniósł się do Johannisschule. Zawsze był jednym z najlepszych uczniów. Kontynuował naukę na Uniwersytecie w Münster. Swoją karierę pisarską rozpoczął w wieku 16 lat; pisał eseje, wiersze i zaczął pisać swoją pierwszą powieść, którą ukończył i wydał w 1920 roku jako Dom marzeń (Die Traumbude).'),
-	   ('Jane', 'Austen', '1775-12-16', 6, 'Autorka powieści opisujących życie angielskiej klasy wyższej z początku XIX wieku. Mimo że sama wiodła stosunkowo odosobnione życie na prowincji w hrabstwie Hampshire, nie pozbawiło jej to zmysłu obserwacji i nie zubożyło dramaturgii jej utworów. Ich fabuła najczęściej dotyczy zamążpójścia i związanych z tym problemów społecznych (sama Austen nigdy nie wyszła za mąż). Reputację dobrej pisarki zyskała już za życia – jej powieści chwalił m.in. Walter Scott.'),
-	   ('Howard Phillips', 'Lovecraft', '1890-08-20', 1, 'Amerykański pisarz, autor opowieści grozy (weird fiction) i fantasy, twórca mitologii Cthulhu. Jest jednym z prekursorów fantastyki naukowej, a styl przez niego stworzony określany jest jako horror lovecraftowski.'),
-	   ('Maya Lin', 'Wang', '1992-03-21', 1, 'M. L. Wang urodziła się w Wisconsin w 1992 roku, w wieku dziewięciu lat postanowiła zostać pisarką i nigdy nie dorosła. W 2015 roku uzyskała tytuł licencjata historii w Knox College i obecnie pracuje w szkole sztuk walki w swoim rodzinnym mieście Madison. Studiowała historię, uczyła się wielu języków obcych, a nawet studiowała za granicą z zachodnioafrykańskim tradycjonalistą, aby zrozumieć wszechświat tych książek.'),
-       ('Przemysław', 'Piotrowski', '1982-06-05', 4, 'Polski dziennikarz związany z tematyką sportową i śledczą, pisarz, autor bestsellerowych powieści kryminalnych. Przemysław Piotrowski urodził się w Zielonej Górze. Ukończył tam edukację podstawową oraz podjął studia. Ukończył politologię na Uniwersytecie Zielonogórskim, studiował nauki pokrewne w Hiszpanii i USA.'),
-	   ('Charlie', 'Donlea', '1982-01-13', 1, 'Charlie Donlea mieszka ze swoją żoną i dwójką dzieci w Chicago. Część każdego roku spędza ze swoim ojcem, łowiąc ryby na odludziu w Kanadzie, w miejscu, gdzie kończą się drogi, a do jezior można się dostać wyłącznie wodnosamolotem. Te majestatyczne podróże na łono Matki Natury posłużyły jako inspiracja dla jego debiutanckiej powieści.');
-
-INSERT INTO dbo.authorsBooks(author_id, book_id)
-VALUES (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10);
-
-INSERT INTO [user](username, password_hash, email, [role], created_at, last_login, status_id)
-VALUES ('karol_szczepanski', '0b14d501a594442a01c6859501bcb3e8164d183d32937b851835442f69d5c94e', 'karol.szczepanski@biblioteka.com', 'admin', '2024-02-01', '2025-04-14', 2),
-	   ('wieslaw_wisniewski', '6cf615d5bcaac778252a8f1f3360d23f02f34ec182e259897fd6ce485d7870d4', 'wieslaw.wisniewski@biblioteka.com', 'admin', '2024-02-02', '2025-04-13', 2),
-	   ('joanna_szulc', '5906ac361a137e2d286465cd6588sbb5ac3f5ae955001100bc41577c3d751764', 'joanna.szulc@biblioteka.com', 'librarian', '2024-02-03', '2025-04-12', 2),
-	   ('pawel_zielinski', 'b97873a40f73abedd8d684a7cd5e5f85e4a9cfb83eac26886640a0813850122b', 'pawel.zielinski@biblioteka.com', 'librarian', '2024-02-04', '2025-04-11', 2),
-	   ('aleksandra_kowalska', '8b2c86ea9cf2ea4eb517fd1e06b74f399e7fec0fef92e3b482a6cf2e2b092023', 'aleksandra_kowalska@biblioteka.com', 'librarian', '2024-02-05', '2025-04-10', 2),
-	   ('daria_kaczmarek', '598a1a400c1dfdf3697ae69d7e1bc98593f2e15015eed8e9b7e47a83b31693d5', 'daria_kaczmarek@biblioteka.com', 'librarian', '2024-02-06', '2025-04-09', 2),
-	   ('krzysztof_wojciechowski', '5860836e8g13fc9837539a597d4086bfc0299e54ad92148d54538b5c3feefb7c', 'krzysztof_wojciechowski@biblioteka.com', 'user', '2024-02-07', '2025-04-08', 2),
-	   ('szymon_szymanski', '57f3ebab63f156fd8f776ba645a55d96360b15eeffc8b0e4afe4c05fa88229aa', 'szymon_szymanski@biblioteka.com', 'user', '2024-02-08', '2025-04-07', 2),
-	   ('arkadiusz_gorecki', '9323dd6786ebcbf3ac87357cc78ba1abfda6cf5e55cd01097b90d4a286cac90s', 'arkadiusz_gorecki@biblioteka.com', 'user', '2024-02-09', '2025-04-06', 2),
-	   ('konrad_wozniak', 'cc4a9ea03fcac15b5fc63c949ac34e7b0fd17906716ac3b8e58c599cdc5a52f0', 'konrad_wozniak@biblioteka.com', 'user', '2024-02-10', '2025-04-05', 2);
-	   
-INSERT INTO dbo.readers([user_id], first_name, last_name, [address], phone, registration_date, status_id)
-VALUES (1, 'Marcin', 'Skowroński', 'ul. Rubinowa 8, 07-230 Warszawa', '888123444', '2023-12-04', 2),
-	   (2, 'Czesław', 'Biernat', 'ul. Długa 12a, 03-420 Białystok', '013222999', '2021-10-22', 2),
-	   (3, 'Radosław', 'Bielak', 'ul. Liściasta 22, 09-420 Sochaczew', '429381033', '2024-04-01', 2),
-	   (4, 'Sandra', 'Adamska', 'ul. Gościnna 3, 53-123 Koło', '812822944', '2017-01-01', 2),
-	   (5, 'Mirosław', 'Sękiewicz', 'ul. Szmaragdowa 10, 22-222 Świebodzin', '723411081', '2022-04-11', 2),
-	   (6, 'Karol', 'Stępień', 'ul. Warszawska 17b, 08-230 Kraków', '921033884', '2021-06-23', 2),
-	   (7, 'Wiktoria', 'Kowalewska', 'ul. Krótka 3c, 93-222 Gdańsk', '812123033', '2022-04-04', 2),
-	   (8, 'Dominika', 'Majewska', 'ul. Gdańska 14, 09-222 Lublin', '871222034', '2019-02-23', 2),
-	   (9, 'Wiktor', 'Morawski', 'ul. Kolorowa 22, 12-345 Gorzów Wielkopolski', '543123075', '2020-03-15', 2),
-	   (10, 'Maja', 'Rybicka', 'ul. Spacerowa 17b, 94-233 Sopot', '876019283', '2024-01-22', 2);
-
-INSERT INTO dbo.borrowing(book_id, readers_id, borrowing_date, return_date, due, status_id)
-VALUES (1, 1, '2025-04-01', NULL, 7, 14),
-	   (2, 2, '2025-04-02', NULL, 7, 14),
-	   (3, 3, '2025-04-03', NULL, 7, 14),
-	   (4, 4, '2025-04-04', NULL, 7, 14),
-	   (5, 5, '2025-04-05', NULL, 7, 14),
-	   (6, 6, '2025-04-06', NULL, 7, 14),
-	   (7, 7, '2025-04-07', NULL, 7, 14),
-	   (8, 8, '2025-04-08', NULL, 7, 14),
-	   (9, 9, '2025-04-09', NULL, 7, 14),
-	   (10, 10, '2025-04-10', NULL, 7, 14);
-
-INSERT INTO dbo.reservation(book_id, readers_id, reservation_date, status_id)
-VALUES (1, 10, '2025-04-08', 15),
-	   (2, 9, '2025-04-09', 16),
-	   (3, 8, '2025-04-10', 15),
-	   (4, 7, '2025-04-11', 16),
-	   (5, 6, '2025-04-12', 15),
-	   (6, 5, '2025-04-13', 16),
-	   (7, 4, '2025-04-14', 15),
-	   (8, 3, '2025-04-15', 15),
-	   (9, 2, '2025-04-16', 16),
-	   (10, 1, '2025-04-17', 15);
-
-INSERT INTO dbo.fine(borrowing_id, amount, date_issue, date_pay, status_id)
-VALUES (1, 1000.00, '2025-04-09', NULL, 18),
-       (2, 2000.00, '2025-04-10', NULL, 18),
-	   (3, 1500.00, '2025-04-11', NULL, 18),
-       (4, 1000.00, '2025-04-12', NULL, 18),
-	   (5, 1200.00, '2025-04-13', NULL, 18),
-	   (6, 3000.00, '2025-04-14', '2025-04-15', 17),
-       (7, 1000.00, '2025-04-15', '2025-04-16', 17),
-	   (8, 2500.00, '2025-04-16', '2025-04-17', 17),
-       (9, 3000.00, '2025-04-17', '2025-04-18', 17),
-	   (10, 2200.00, '2025-04-18', '2025-04-19', 17);
+SELECT * FROM dbo.status 
