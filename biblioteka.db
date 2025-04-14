@@ -151,3 +151,60 @@ VALUES ('Niedostepna','books',1),
 
 
 SELECT * FROM dbo.status 
+
+-- Dodanie krajów
+INSERT INTO country (country, country_short)
+VALUES 
+('Polska', 'PL'),
+('Podlasie', 'POD'),
+('Radziwie', 'RAD'),
+('Redania', 'RED');
+('Temeria', 'TEM'),
+('Nilfgaard', 'NIL');
+('Stany Zjednoczone', 'USA'),
+('Wielka Brytania', 'GB'),
+('Francja', 'FR'),
+('Niemcy', 'DE'),
+
+-- Dodanie autorów
+INSERT INTO authors (first_name, last_name, birth_date, country_id, biography)
+VALUES
+('Jan', 'Kaczkowski', '1977-07-26', 1, 'Polski ksiądz katolicki, doktor nauk teologicznych, bioetyk, założyciel i dyrektor Puckiego Hospicjum pw. św. Ojca Pio.'),
+('Joanna', 'Podsadecka', '1980-05-15', 1, 'Polska pisarka, współautorka książek z Janem Kaczkowskim.'),
+('Britt', 'Allcroft', '1943-12-14', 3, 'Brytyjska producentka telewizyjna, najbardziej znana jako twórczyni serialu "Tomek i przyjaciele".'),
+('Andrzej', 'Sapkowski', '1948-06-21', 1, 'Jeden z najpopularniejszych polskich pisarzy fantasy, twórca serii o Wiedźminie.'),
+('Piotr', 'Fulmański', NULL, 1, 'Polski naukowiec i autor książek z zakresu informatyki.'),
+('Anna', 'Nowak', '1975-03-10', 1, 'Autorka książek dla dzieci.'),
+('Michał', 'Kowalski', '1982-11-22', 1, 'Autor poradników związanych z końmi.'),
+('Ewa', 'Wiśniewska', '1968-09-05', 1, 'Pisarka, autorka powieści obyczajowych.'),
+('John', 'Smith', '1970-04-18', 2, 'Amerykański autor książek technicznych.'),
+('Maria', 'Garcia', '1985-07-30', 7, 'Hiszpańska autorka literatury dziecięcej.');
+
+-- Dodanie książek
+INSERT INTO books (title, isbn, publication_year, publisher, genre, available_copies, total_copies, status_id)
+VALUES
+('DASZ RADĘ OSTATNIA ROZMOWA', '9788326824561', 2020, 'Znak', 'Biografia', 3, 5, 1),
+('Julek i DZIURA w BUDŻECIE', '9788378876324', 2019, 'Literatura', 'Dla dzieci', 2, 2, 1),
+('Bajki 5 minut przed snem Tomek i przyjaciele', '9788328108522', 2018, 'Egmont', 'Dla dzieci', 1, 1, 1),
+('Masaż konia - poradnik', '9788365976123', 2021, 'Galaktyka', 'Poradnik', 4, 4, 1),
+('Wiedźmin', '9788375780635', 2014, 'SuperNowa', 'Fantasy', 5, 7, 1),
+('Koń z Vallony', '9788374692723', 2017, 'Wydawnictwo Literackie', 'Powieść', 2, 3, 1),
+('Blockchain', '9788328356786', 2020, 'PWN', 'Informatyka', 3, 3, 1),
+('Learn Swift by examples', '9788328356793', 2021, 'PWN', 'Informatyka', 2, 2, 1),
+('NoSQL. Theory and examples', '9788328356809', 2022, 'PWN', 'Informatyka', 1, 1, 1),
+('Engineering of Big Data Processing', '9788328356816', 2023, 'PWN', 'Informatyka', 0, 1, 2);
+
+-- Dodanie powiązań autorów z książkami
+INSERT INTO authorsBooks (author_id, book_id)
+VALUES
+(1, 1), (2, 1), -- DASZ RADĘ OSTATNIA ROZMOWA
+(6, 2),         -- Julek i DZIURA w BUDŻECIE
+(3, 3),         -- Bajki 5 minut przed snem
+(7, 4),         -- Masaż konia - poradnik
+(4, 5),         -- Wiedźmin
+(8, 6),         -- Koń z Vallony
+(5, 7),         -- Blockchain
+(5, 8),         -- Learn Swift by examples
+(5, 9),         -- NoSQL. Theory and examples
+(5, 10);        -- Engineering of Big Data Processing
+
