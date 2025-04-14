@@ -151,3 +151,15 @@ VALUES ('Niedostepna','books',1),
 
 
 SELECT * FROM dbo.status 
+INSERT INTO books (title, isbn, publication_year, publisher, genre, available_copies, total_copies, status_id)
+VALUES 
+('Władca Pierścieni: Drużyna Pierścienia', '9788373191723', 2002, 'Warszawskie Wydawnictwo Literackie Muza', 'Fantasy', 3, 5, 1),
+('Harry Potter i Kamień Filozoficzny', '9788382656824', 1997, 'Media Rodzina', 'Fantasy', 2, 4, 1),
+('Zbrodnia i kara', '9788382411232', 1866, 'Wydawnictwo MG', 'Klasyka', 1, 2, 1),
+('Lalka', '9788367262750', 1889, 'Marginesy', 'Klasyka', 2, 2, 1),
+('Pan Tadeusz', '9788382411492', 1834, 'Wydawnictwo MG', 'Poezja epicka', 1, 1, 1),
+('Zew Cthulhu', '9788377313237', 1928, 'Vesper', 'Horror', 2, 3, 1),
+('1984', '9788311174368', 1953, 'Bellona', 'Dystopia', 4, 4, 1),
+('Mały Książę', '9782070612758', 1943, 'Wydawnictwo Olesiejuk', 'Baśń filozoficzna', 3, 3, 1),
+('Hobbit, czyli tam i z powrotem', '9788324411641', 1961, 'Wydawnictwo Iskry', 'Fantasy', 1, 2, 1),
+('Imię róży', '9788373928046', 1987, 'Noir sur Blanc', 'Kryminał historyczny', 1, 1, 1);
