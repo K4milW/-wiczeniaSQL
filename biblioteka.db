@@ -151,3 +151,106 @@ VALUES ('Niedostepna','books',1),
 
 
 SELECT * FROM dbo.status 
+-- Tabela country
+INSERT INTO country (country, country_short) VALUES
+('Polska', 'POL'),
+('Niemcy', 'DEU'),
+('Francja', 'FRA'),
+('Hiszpania', 'ESP'),
+('Włochy', 'ITA'),
+('Wielka Brytania', 'GBR'),
+('Stany Zjednoczone', 'USA'),
+('Kanada', 'CAN'),
+('Japonia', 'JPN'),
+('Australia', 'AUS');
+
+-- Tabela status
+INSERT INTO [status] (status_name, status_desc, status_type, [status]) VALUES
+('Dostępna', 'Książka dostępna', 'książki', 1),
+('Wypożyczona', 'Książka wypożyczona', 'książki', 1),
+('Zarezerwowana', 'Książka zarezerwowana', 'książki', 1),
+('Aktywny', 'Konto aktywne', 'użytkownicy', 1),
+('Zablokowany', 'Konto zablokowane', 'użytkownicy', 0),
+('Nowa', 'Nowa rezerwacja', 'rezerwacje', 1),
+('Zrealizowana', 'Rezerwacja zrealizowana', 'rezerwacje', 0),
+('Anulowana', 'Rezerwacja anulowana', 'rezerwacje', 0),
+('Naliczona', 'Kara naliczona', 'kary', 1),
+('Opłacona', 'Kara opłacona', 'kary', 0);
+
+-- Tabela authors
+INSERT INTO authors (first_name, last_name, birth_date, country_id, biography) VALUES
+('Adam', 'Mickiewicz', '1798-12-24', 1, 'Wieszcz narodowy'),
+('Henryk', 'Sienkiewicz', '1846-05-05', 1, 'Laureat Nobla'),
+('Stanisław', 'Lem', '1921-09-12', 1, 'Pisarz SF'),
+('Joanne', 'Rowling', '1965-07-31', 6, 'Autorka Harry''ego Pottera'),
+('George', 'Orwell', '1903-06-25', 6, 'Autor "Roku 1984"'),
+('Stephen', 'King', '1947-09-21', 7, 'Mistrz horroru'),
+('Andrzej', 'Sapkowski', '1948-06-21', 1, 'Twórca Wiedźmina'),
+('J.R.R.', 'Tolkien', '1892-01-03', 6, 'Autor Władcy Pierścieni'),
+('Agatha', 'Christie', '1890-09-15', 6, 'Królowa kryminału'),
+('Dan', 'Brown', '1964-06-22', 7, 'Autor Kodu Leonarda da Vinci');
+
+-- Tabela books
+INSERT INTO books (title, isbn, publication_year, publisher, genre, available_copies, total_copies, status_id) VALUES
+('Pan Tadeusz', '9788373271920', 1834, 'Czytelnik', 'Epopeja', 5, 10, 1),
+('W pustyni i w puszczy', '9788373895722', 1911, 'GREG', 'Przygodowa', 3, 8, 1),
+('Solaris', '9788374801532', 1961, 'Wydawnictwo Literackie', 'SF', 2, 5, 1),
+('Harry Potter i Kamień Filozoficzny', '9788372780567', 1997, 'Media Rodzina', 'Fantasy', 0, 3, 2),
+('Folwark zwierzęcy', '9788382022206', 1945, 'MUZA', 'Dystopia', 4, 6, 1),
+('Lśnienie', '9788375067999', 1977, 'Prószyński', 'Horror', 1, 2, 1),
+('Wiedźmin: Ostatnie życzenie', '9788375780635', 1993, 'superNOWA', 'Fantasy', 6, 8, 1),
+('Hobbit', '9788324156860', 1937, 'Iskry', 'Fantasy', 2, 4, 1),
+('Morderstwo w Orient Expressie', '9788324044075', 1934, 'Dolnośląskie', 'Kryminał', 0, 3, 2),
+('Kod Leonarda da Vinci', '9788373019511', 2003, 'Sonia Draga', 'Thriller', 3, 5, 1);
+
+-- Tabela authorsBooks
+INSERT INTO authorsBooks (author_id, book_id) VALUES
+(1, 1), (2, 2), (3, 3), (4, 4), (5, 5),
+(6, 6), (7, 7), (8, 8), (9, 9), (10, 10);
+
+-- Tabela user
+INSERT INTO [user] (username, password_hash, email, [role], status_id) VALUES
+('admin', 'admin123', 'admin@biblioteka.pl', 'admin', 4),
+('bibliotekarz1', 'biblio#456', 'biblio@biblioteka.pl', 'librarian', 4),
+('jan_kowalski', 'zaq1@WSX', 'jan@mail.pl', 'user', 4),
+('anna_nowak', '2wsxCDE#', 'anna@mail.pl', 'user', 4),
+('marek_t', '3edcVFR$', 'marek@mail.pl', 'user', 5),
+('kasia_z', '4rfvBGT%', 'kasia@mail.pl', 'user', 4),
+('pawel_g', '5tgbNHY^', 'pawel@mail.pl', 'user', 4),
+('ola_p', '6yhnMJU&', 'ola@mail.pl', 'user', 5),
+('tomek_k', '7ujmIK<', 'tomek@mail.pl', 'user', 4),
+('zuzia_w', '8ik,OL>', 'zuzia@mail.pl', 'user', 4);
+
+-- Tabela readers
+INSERT INTO readers (user_id, first_name, last_name, [address], phone, status_id) VALUES
+(3, 'Jan', 'Kowalski', 'ul. Słoneczna 5, Kraków', '500-600-700', 4),
+(4, 'Anna', 'Nowak', 'ul. Kwiatowa 2, Warszawa', '600-700-800', 4),
+(5, 'Marek', 'Trzeciak', 'ul. Leśna 8, Gdańsk', '700-800-900', 5),
+(6, 'Katarzyna', 'Zawadzka', 'ul. Polna 12, Poznań', '800-900-100', 4),
+(7, 'Paweł', 'Górski', 'ul. Górska 3, Wrocław', '900-100-200', 4),
+(8, 'Ola', 'Pawlak', 'ul. Morska 7, Szczecin', '100-200-300', 5),
+(9, 'Tomasz', 'Kowalczyk', 'ul. Brzozowa 9, Łódź', '200-300-400', 4),
+(10, 'Zuzanna', 'Wójcik', 'ul. Lipowa 1, Lublin', '300-400-500', 4),
+(1, 'Admin', 'Systemu', 'ul. Administracyjna 1', '000-000-000', 4),
+(2, 'Bibliotekarz', 'Główny', 'ul. Książkowa 99', '111-222-333', 4);
+
+-- Tabela borrowing
+INSERT INTO borrowing (book_id, readers_id, due, status_id) VALUES
+(1, 1, 14, 2), (2, 2, 14, 2), (3, 3, 14, 2),
+(4, 4, 14, 2), (5, 5, 14, 2), (6, 6, 14, 2),
+(7, 7, 14, 2), (8, 8, 14, 2), (9, 9, 14, 2),
+(10, 10, 14, 2);
+
+-- Tabela reservation
+INSERT INTO reservation (book_id, readers_id, status_id) VALUES
+(1, 1, 6), (2, 2, 6), (3, 3, 6),
+(4, 4, 6), (5, 5, 6), (6, 6, 6),
+(7, 7, 6), (8, 8, 6), (9, 9, 6),
+(10, 10, 6);
+
+-- Tabela fine
+INSERT INTO fine (borrowing_id, amount, status_id) VALUES
+(1, 10.50, 9), (2, 15.00, 9), (3, 20.00, 9),
+(4, 25.50, 9), (5, 5.00, 9), (6, 12.30, 9),
+(7, 8.00, 9), (8, 30.00, 9), (9, 18.50, 9),
+(10, 22.00, 9);
