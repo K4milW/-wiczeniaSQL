@@ -1,153 +1,68 @@
--- Tworzenie bazy danych
-USE master
-CREATE DATABASE [Biblioteka_g2];
-GO
-USE [Biblioteka_g2];
-
-CREATE TABLE country (
-	country_id INT IDENTITY (1,1),
-	country VARCHAR(20) NOT NULL,
-	country_short VARCHAR(3) NOT NULL
-	CONSTRAINT PK_country_country_id PRIMARY KEY CLUSTERED (country_id)
-)
-
-CREATE TABLE [status] (
-	status_id INT IDENTITY(1,1) PRIMARY KEY,
-	status_name varchar(50) NOT NULL,
-	status_desc varchar(200),
-	status_type varchar(50), -- typ statusu
-	[status] BIT -- akrtywny, nieakrywny
-)
-
-
--- Tabela Authors (Autorzy)
-CREATE TABLE authors (
-    author_id INT IDENTITY(1,1) PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    birth_date DATE,
-	country_id INT NOT NULL DEFAULT 1,
-    biography VARCHAR(MAX),
-	FOREIGN KEY (country_id) REFERENCES country(country_id) 
-);
-
-
--- Tabela Books (Książki)
-IF NOT EXISTS (SELECT 1 FROM [INFORMATION_SCHEMA].[TABLES] WHERE TABLE_NAME ='books' )
-CREATE TABLE books (
-    book_id INT IDENTITY(1,1) PRIMARY KEY,
-    title VARCHAR(100) NOT NULL,
-    isbn VARCHAR(20) UNIQUE,
-    publication_year INT,
-    publisher VARCHAR(100),
-    genre VARCHAR(50),
-    available_copies INT DEFAULT 1,
-    total_copies INT DEFAULT 1,
-	status_id INT NOT NULL,
-	FOREIGN KEY ([status_id]) REFERENCES [status]([status_id])
-);
-
--- Tabela łącząca Authors i Books (AutorzyKsiążek)
-CREATE TABLE authorsBooks (
-    --author_book_id INT IDENTITY(1,1) PRIMARY KEY,
-    author_id INT NOT NULL,
-    book_id INT NOT NULL,
-    FOREIGN KEY (author_id) REFERENCES authors(author_id),
-    FOREIGN KEY (book_id) REFERENCES books(book_id),
-    --UNIQUE (author_id, book_id)
-	CONSTRAINT PK_authorsBooks_author_id_book_id PRIMARY KEY CLUSTERED (author_id,book_id)
-);
-
--- Tabela User (Użytkownicy systemu)
-CREATE TABLE [user] (
-    [user_id] INT IDENTITY(1,1) PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    [role] VARCHAR(20) CHECK ([role] in ('admin', 'librarian', 'user')),
-    created_at DATETIME DEFAULT GETDATE(),
-    last_login DATETIME,
-	status_id INT NOT NULL,
-	FOREIGN KEY ([status_id]) REFERENCES [status]([status_id])
-);
-
---ALTER TABLE dbo.[User]
---ADD CONSTRAINT DF_wlasna_nazwa_constrain_role CHECK ([role] in ('admin', 'librarian', 'user'))
---GO
 
 
 
--- Tabela Czytelnicy (Czytelnicy biblioteki)
-CREATE TABLE readers (
-    readers_id INT IDENTITY(1,1) PRIMARY KEY,
-    user_id INT NOT NULL,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    [address] VARCHAR(100),
-    phone VARCHAR(20),
-    registration_date DATE DEFAULT GETDATE(),
-	status_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES [User](user_id),
-	FOREIGN KEY ([status_id]) REFERENCES [status]([status_id])
-);
+INSERT INTO country (country, country_short) VALUES
+('Polska', 'POL'),
+('Stany Zjednoczone', 'USA'),
+('Wielka Brytania', 'GBR'),
+('Francja', 'FRA'),
+('Niemcy', 'DEU'),
+('Rosja', 'RUS'),
+('Japonia', 'JPN'),
+('Hiszpania', 'ESP'),
+('Włochy', 'ITA'),
+('Czechy', 'CZE');
 
--- Tabela Wypożyczenia (Wypożyczenia książek)
-CREATE TABLE borrowing (
-    borrowing_id INT IDENTITY(1,1) PRIMARY KEY,
-    book_id INT NOT NULL,
-    readers_id INT NOT NULL,
-    borrowing_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    return_date DATETIME,
-    due INT NOT NULL,
-    [status] varchar(20) CHECK ([status] in ('wypożyczona', 'zwrócona', 'przetrzymana')) DEFAULT 'wypożyczona',
-	[status_id] INT NOT NULL,
-    FOREIGN KEY (book_id) REFERENCES books(book_id),
-    FOREIGN KEY (readers_id) REFERENCES readers(readers_id),
-	FOREIGN KEY ([status_id]) REFERENCES [status]([status_id])
-);
 
--- Tabela Rezerwacja (Rezerwacje książek)
-CREATE TABLE dbo.reservation (
-    reservation_id INT IDENTITY(1,1) PRIMARY KEY,
-    book_id INT NOT NULL,
-    readers_id INT NOT NULL,
-    reservation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-	--[status] varchar(20) CHECK ([status] in ('aktywna', 'zrealizowana', 'anulowana')) DEFAULT 'aktywna',
-	[status_id] INT NOT NULL,
-    FOREIGN KEY (book_id) REFERENCES Books(book_id),
-    FOREIGN KEY (readers_id) REFERENCES readers(readers_id),
-	FOREIGN KEY ([status_id]) REFERENCES [status]([status_id])
-);
--- CREATE INDEX index1 ON schema1.table1 (column1);
-CREATE INDEX IX_reservation_book_is ON dbo.reservation(book_id)
-	
+INSERT INTO [status] (status_name, status_desc, status_type, [status]) VALUES
+('Aktywny', 'Konto aktywne', 'user_status', 1),
+('Nieaktywny', 'Konto nieaktywne', 'user_status', 0),
+('Zablokowany', 'Konto zablokowane', 'user_status', 0),
+('Dostępna', 'Książka dostępna', 'book_status', 1),
+('Wypożyczona', 'Książka wypożyczona', 'book_status', 1),
+('Zarezerwowana', 'Książka zarezerwowana', 'book_status', 1),
+('W naprawie', 'Książka w naprawie', 'book_status', 0),
+('Zgubiona', 'Książka zgubiona', 'book_status', 0),
+('Naliczona', 'Kara naliczona', 'fine_status', 1),
+('Opłacona', 'Kara opłacona', 'fine_status', 1);
 
 
 
--- Tabela kary (Kary za przetrzymanie)
-CREATE TABLE fine (
-    fine_id INT IDENTITY(1,1) PRIMARY KEY,
-    borrowing_id INT NOT NULL,
-    amount DECIMAL(10,2) NOT NULL,
-    date_issue DATETIME DEFAULT CURRENT_TIMESTAMP,
-    date_pay DATETIME,
-	--[status] varchar(20) CHECK ([status] in ('naliczona', 'opłacona', 'umorzona')) DEFAULT 'naliczona',
-	[status_id] INT NOT NULL
-    FOREIGN KEY (borrowing_id) REFERENCES borrowing(borrowing_id),
-	FOREIGN KEY ([status_id]) REFERENCES [status]([status_id])
-);
+INSERT INTO authors (first_name, last_name, birth_date, country_id, biography) VALUES
+('Henryk', 'Sienkiewicz', '1846-05-05', 1, 'Polski powieściopisarz, nowelista, laureat Nagrody Nobla w dziedzinie literatury.'),
+('Stephen', 'King', '1947-09-21', 2, 'Amerykański pisarz, autor horrorów, thrillerów i fantasy.'),
+('Joanne', 'Rowling', '1965-07-31', 3, 'Brytyjska pisarka, autorka serii o Harrym Potterze.'),
+('George', 'Orwell', '1903-06-25', 3, 'Brytyjski pisarz i publicysta, autor "Roku 1984".'),
+('Fiodor', 'Dostojewski', '1821-11-11', 6, 'Rosyjski pisarz, autor "Zbrodni i kary".'),
+('Haruki', 'Murakami', '1949-01-12', 7, 'Japoński pisarz i tłumacz.'),
+('Gabriel', 'García Márquez', '1927-03-06', 4, 'Kolumbijski pisarz, laureat Nagrody Nobla w dziedzinie literatury.'),
+('Umberto', 'Eco', '1932-01-05', 9, 'Włoski pisarz i filozof, autor "Imienia róży".'),
+('Franz', 'Kafka', '1883-07-03', 5, 'Pisarz żydowskiego pochodzenia tworzący w języku niemieckim.'),
+('Milan', 'Kundera', '1929-04-01', 10, 'Czeski pisarz i eseista.');
 
 
 
+INSERT INTO books (title, isbn, publication_year, publisher, genre, available_copies, total_copies, status_id) VALUES
+('Quo Vadis', '9788373271810', 1896, 'Gebethner i Wolff', 'powieść historyczna', 5, 5, 4),
+('To', '9788382021964', 1986, 'Albatros', 'horror', 3, 3, 4),
+('Harry Potter i Kamień Filozoficzny', '9788380080401', 1997, 'Media Rodzina', 'fantasy', 2, 2, 4),
+('Rok 1984', '9788375060225', 1949, 'Muza', 'dystopia', 4, 4, 4),
+('Zbrodnia i kara', '9788377792506', 1866, 'Znak', 'powieść psychologiczna', 3, 3, 4),
+('Kafka nad morzem', '9788374801103', 2002, 'Muza', 'realizm magiczny', 2, 2, 4),
+('Sto lat samotności', '9788373014416', 1967, 'Muza', 'realizm magiczny', 1, 1, 4),
+('Imię róży', '9788371801403', 1980, 'NOIR SUR BLANC', 'powieść historyczna', 3, 3, 4),
+('Proces', '9788375060478', 1925, 'Muza', 'powieść egzystencjalna', 2, 2, 4),
+('Nieznośna lekkość bytu', '9788307028216', 1984, 'Państwowy Instytut Wydawniczy', 'powieść filozoficzna', 1, 1, 4);
 
---INSERT INTO nazwa (kolumna) VALUES (wartosc)
-INSERT INTO dbo.[status] ([status_name],[status_desc],[status_type],[status])
-VALUES ('Dostępna','Książka jest dostępna w bibliotece','books',1)
 
-INSERT INTO dbo.[status] ([status_name],[status_type],[status])
-VALUES ('Niedostepna','books',1),
-('Aktywny','users',1),
-('Nieaktywny','users',1)
-
-
-SELECT * FROM dbo.status 
+INSERT INTO authorsBooks (author_id, book_id) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 8),
+(9, 9),
+(10, 10);
