@@ -16,7 +16,7 @@ INSERT INTO authors (first_name, last_name, birth_date, country_id, biography) V
 ('Joanne', 'Rowling', '1965-07-31', 5, 'Autorka Harry'ego Pottera'),
 ('Bartsz', 'Maniek', '2000-01-01', 1, 'Autor Dziady'),
 ('Marek', 'Cwaniak', '1800-02-12', 6, 'Amerykański pisarz'),
-('Magdalena', 'Gessler', '1775-12-16', 4, Angielska pisarka')
+('Magdalena', 'Gessler', '1775-12-16', 4, 'Angielska pisarka'),
 ('Stephen', 'Carry', '1966-09-21', 4, 'Amerykański autor'),
 ('Marcin', 'Gortat', '1899-07-21', 3, 'Amerykański pisarz'),
 ('Cristiano', 'Ronaldo', '1985-02-05', 10, 'Portugalski pisarz'),
