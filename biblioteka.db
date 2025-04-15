@@ -151,3 +151,50 @@ VALUES ('Niedostepna','books',1),
 
 
 SELECT * FROM dbo.status 
+
+
+
+SELECT * FROM dbo.status 
+
+-- Dodanie książek do tabeli ksiązki
+INSERT INTO books (title, isbn, publication_year, publisher, genre, available_copies, total_copies, status_id)
+VALUES 
+('Pięćdziesiąt Twarzy Greya', '9788379991655', 2012, 'Sonia Draga', 'Romanse', 3, 4, 1),
+('Ciemniejsza strona Greya', '9788379992447', 2012, 'Sonia Draga', 'Romanse', 4, 6, 1),
+('Nowe oblicze Greya', '9788379993253', 2012, 'Sonia Draga', 'Romanse', 2, 2, 1),
+('Dotyk Crossa', '9788376867816', 2013, 'Wydawnictwo Akurat', 'Romanse', 5, 5, 1),
+('Seks, kłamstwa i kasyno', '9788377788894', 2015, 'W.A.B.', 'Erotyka', 3, 7, 1),
+('Ostra gra', '9788380323079', 2019, 'Burda Książki', 'Erotyka', 4, 7, 1),
+('Łowca. Sprawa Trynkiewicza', '9788324048649', 2018, 'Znak Literanova', 'Reportaż', 3, 7 ,1),
+('Inside the Mind of Jeffrey Dahmer: The Cannibal Killer', '9781913543310', 2022, 'Ad Lib Publishers Ltd', 'Biografia', 3, 56, 1),
+('Wampir. Joachim Knychała - seryjny morderca kobiet', '9788396418807', 2022, 'Wydawnictwo Kryminalistyczne', 'Reportaż', 2, 3, 1),
+('Tylko nie mów nikomu', '9788380916692', 2019, 'Ringier Axel Springer Polska', 'Reportaż', 10, 23, 1);
+
+
+-- Dodanie Krajów
+INSERT INTO dbo.country(country, country_short)
+VALUES 
+           ('Stany Zjednoczone', 'US'),
+	   ('Polska', 'PL'),
+           ('Rosja', 'RU'),
+	   ('Stany Zjednoczone', 'US'),
+	   ('Niemcy', 'DE'),
+	   ('Wielka Brytania', 'UK'),
+	   ('Palau', 'PW'),
+           ('Francja', 'FR'),
+	   ('Włochy', 'IT'),
+           ('Togo', 'TG');
+
+-- Dodanie powiązań autorów z książkami
+INSERT INTO authorsBooks (author_id, book_id)
+VALUES 
+(1, 1),  -- E. L. James -> Pięćdziesiąt Twarzy Greya
+(1, 2),  -- E. L. James -> Ciemniejsza strona Greya
+(1, 3),  -- E. L. James -> Nowe oblicze Greya
+(2, 4),  -- Sylvia Day -> Dotyk Crossa
+(3, 5),  -- Jennifer Probst -> Seks, kłamstwa i kasyno
+(4, 6),  -- Meredith Wild -> Ostra gra
+(5, 7),  -- Przemysław Semczuk -> Łowca. Sprawa Trynkiewicza
+(6, 8),  -- Brad Hunter -> Jeffrey Dahmer
+(7, 9),  -- Michał Larek -> Joachim Knychała
+(8, 10); -- Tomasz Sekielski -> Tylko nie mów nikomu
