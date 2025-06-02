@@ -1,0 +1,14 @@
+--Suma wypożyczeń z informacją o aktualnie wypożyczonych książkach
+ --Wyświetl dla każdego czytelnika sumę kar narastająco (running total) według daty wypożyczenia.
+ 
+ ---Nadaj każdej książce ranking wg liczby wypożyczeń (najczęściej wypożyczana = 1).
+ 
+ ---Dla każdego czytelnika pokaż datę ostatniego wypożyczenia przed aktualnym (LAG).
+ 
+ --Wyznacz, ile razy czytelnik wypożyczył książkę w danym roku, oraz jego miejsce w rankingu liczby wypożyczeń w tym roku.
+ 
+ --Podziel wszystkich czytelników na 4 grupy (kwartyle) wg sumy kar (NTILE).
+ 
+ --Wyświetl dla każdego wypożyczenia różnicę między aktualną karą a poprzednią (LAG).
+ 
+ --Pokaż dla każdej książki, ile razy była wypożyczana w ostatnich 5 wypożyczeniach (rolling count).
